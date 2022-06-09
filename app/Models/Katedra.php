@@ -10,6 +10,13 @@ class Katedra extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'naziv',
+        'broj_clanova',
+        'sef',
+    ];
+
+
     public function profesori()
     {
         return $this->hasMany(Profesor::class);

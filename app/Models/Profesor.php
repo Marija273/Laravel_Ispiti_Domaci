@@ -11,6 +11,13 @@ class Profesor extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'ime_prezime',
+        'tip',
+        'email',
+        'katedra_id',
+    ];
+
     public function katedra()
     {
         return $this->belongsTo(Katedra::class);

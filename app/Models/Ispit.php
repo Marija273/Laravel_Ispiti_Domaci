@@ -10,6 +10,13 @@ class Ispit extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'naziv',
+        'espb',
+        'semestar',
+        'profesor_id'
+    ];
+
     public function profesor()
     {
         return $this->belongsTo(Profesor::class);
