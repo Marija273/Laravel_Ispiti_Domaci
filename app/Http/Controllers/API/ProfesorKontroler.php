@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProfesorResource;
 use App\Models\Profesor;
 use Illuminate\Http\Request;
+
 
 class ProfesorKontroler extends Controller
 {
@@ -15,7 +17,7 @@ class ProfesorKontroler extends Controller
      */
     public function index()
     {
-        //
+        return ProfesorResource::collection(Profesor::all());
     }
 
     /**
@@ -47,7 +49,7 @@ class ProfesorKontroler extends Controller
      */
     public function show(Profesor $profesor)
     {
-        //
+        return new ProfesorResource($profesor);
     }
 
     /**
@@ -70,7 +72,6 @@ class ProfesorKontroler extends Controller
      */
     public function update(Request $request, Profesor $profesor)
     {
-        //
     }
 
     /**
@@ -81,6 +82,7 @@ class ProfesorKontroler extends Controller
      */
     public function destroy(Profesor $profesor)
     {
-        //
+        $profesor->delete();
+        return response()->json('Profesor obrisan');
     }
 }

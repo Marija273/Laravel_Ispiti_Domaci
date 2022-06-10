@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\KatedraResource;
 use App\Models\Katedra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class KatedraKontroler extends Controller
 {
@@ -15,7 +18,7 @@ class KatedraKontroler extends Controller
      */
     public function index()
     {
-        //
+        return KatedraResource::collection(Katedra::all());
     }
 
     /**
@@ -47,7 +50,7 @@ class KatedraKontroler extends Controller
      */
     public function show(Katedra $katedra)
     {
-        //
+        return new KatedraResource($katedra);
     }
 
     /**
@@ -70,7 +73,22 @@ class KatedraKontroler extends Controller
      */
     public function update(Request $request, Katedra $katedra)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'naziv' => 'required',
+            'broj_clanova' => 'required',
+            'sef' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $katedra->naziv = $request->naziv;
+        $katedra->broj_clanova = $request->broj_clanova;
+        $katedra->sef = $request->sef;
+        $katedra->save();
+
+        return response()->json('Izmene sačuvane');
     }
 
     /**
